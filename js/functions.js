@@ -28,7 +28,7 @@ const getNumbers = (string) => {
   string += '';
   let number = '';
   for (let i = 0; i < string.length; i++) {
-    if (!isNaN(string.at(i))) {
+    if (!Number.isNaN(Number(string.at(i)))) {
       number += string.at(i);
     }
   }
