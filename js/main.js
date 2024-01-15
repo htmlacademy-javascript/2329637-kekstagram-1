@@ -36,12 +36,20 @@ const generateIdPhoto = createIdGenerator();
 const generateIdUrl = createIdGenerator();
 const generateIdComment = createIdGenerator();
 
+/**
+ * Функция для создания массива, состоящего из объектов
+ * @param number {object}
+ */
 function arrayGenerator(number) {
   for (let i = 1 ; i <= number ; i++) {
     arrayContent.push(createPhotoDescriptionObject());
   }
 }
 
+/**
+ * Функция-замыкание для создания идентификатора
+ * @returns {function(): number}
+ */
 function createIdGenerator() {
   let lastId = 0;
 
@@ -51,6 +59,12 @@ function createIdGenerator() {
   };
 }
 
+/**
+ * Функция вычисляет случайное число в заданом диапазоне от 'a' до 'b'
+ * @param a {number}
+ * @param b {number}
+ * @returns {number}
+ */
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -58,6 +72,21 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
+/**
+ * Функция создаёт объект из сгенерированных значений свойств
+ * @returns {
+ *  {
+ *    comments: {name: string,
+ *               id: string,
+ *               avatar: string,
+ *               message: string},
+ *    description: string,
+ *    id: number,
+ *    url: string,
+ *    likes: string
+ *  }
+ * }
+ */
 function createPhotoDescriptionObject() {
   return {
     id: generateIdPhoto(),
