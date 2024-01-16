@@ -2,7 +2,7 @@ const PICTURE_COUNT = 25;
 const MAX_LIKE_NUMBER = 200;
 const MIN_LIKE_NUMBER = 15;
 const AVATAR_COUNT = 6;
-const COMMENT_MESSAGES = [
+const commentMessages = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы деламете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -10,7 +10,7 @@ const COMMENT_MESSAGES = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
-const DESCRIPTIONS = [
+const descriptions = [
   'Описание фотографии 1',
   'Описание фотографии 2',
   'Описание фотографии 3',
@@ -20,7 +20,7 @@ const DESCRIPTIONS = [
   'Описание фотографии 7',
   'Описание фотографии 8',
 ];
-const USER_NAMES = [
+const userNames = [
   'Святополк',
   'Неждан',
   'Любава',
@@ -30,34 +30,16 @@ const USER_NAMES = [
   'Всеволод',
 ];
 
-const arrayContent = [];
+/**
+ * Функция-замыкание для создания независимых идентификаторов
+ * @param lastId
+ * @returns {function(): number}
+ */
+const createIdGenerator = (lastId = 0) => () => ++lastId;
 
 const generateIdPhoto = createIdGenerator();
 const generateIdUrl = createIdGenerator();
 const generateIdComment = createIdGenerator();
-
-/**
- * Функция для создания массива, состоящего из объектов
- * @param number {object}
- */
-function arrayGenerator(number) {
-  for (let i = 1 ; i <= number ; i++) {
-    arrayContent.push(createPhotoDescriptionObject());
-  }
-}
-
-/**
- * Функция-замыкание для создания идентификатора
- * @returns {function(): number}
- */
-function createIdGenerator() {
-  let lastId = 0;
-
-  return function () {
-    lastId++;
-    return lastId;
-  };
-}
 
 /**
  * Функция вычисляет случайное число в заданом диапазоне от 'a' до 'b'
@@ -73,33 +55,77 @@ const getRandomInteger = (a, b) => {
 };
 
 /**
- * Функция создаёт объект из сгенерированных значений свойств
- * @returns {
- *  {
- *    comments: {name: string,
- *               id: string,
- *               avatar: string,
- *               message: string},
+ * Функция возвращает случайнай элемент массива
+ * @param array
+ * @returns {*}
+ */
+const getRandomArrayItem = (array) => array[getRandomInteger(0, userNames.length - 1)];
+
+/**
+ * Функция возвращает массив комментариев из сгенерированных объектов
+ * @returns {[
+ *    {
+ *      name: string,
+ *      id: string,
+ *      avatar: string,
+ *      message: string
+ *    },
+ *  ]}
+ */
+const createComments = () => {
+  const arrayComments = [];
+
+  for (let i = 1; i <= getRandomInteger(1,5);i++) {
+    arrayComments
+      .push(
+        {
+          id: `${generateIdComment()}`,
+          avatar: `img/avatar-${getRandomInteger(1, AVATAR_COUNT)}`,
+          message: `${getRandomArrayItem(commentMessages)}`,
+          name: `${getRandomArrayItem(userNames)}`,
+        },
+      );
+  }
+
+  return arrayComments;
+};
+
+/**
+ * Функция возвращает объект, описывающий фотографию опубликованную пользователем
+ * @returns {{
+ *    comments:
+ *      {
+ *        name: string,
+ *        id: string,
+ *        avatar: string,
+ *        message: string
+ *      }[],
  *    description: string,
  *    id: number,
  *    url: string,
  *    likes: string
- *  }
- * }
+ *  }}
  */
-function createPhotoDescriptionObject() {
-  return {
-    id: generateIdPhoto(),
-    url: `photos/${generateIdUrl()}.jpg`,
-    description: `${DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length - 1)]}`,
-    likes: `${getRandomInteger(MIN_LIKE_NUMBER,MAX_LIKE_NUMBER)}`,
-    comments: {
-      id: `${generateIdComment()}`,
-      avatar: `img/avatar-${getRandomInteger(1, AVATAR_COUNT)}`,
-      message: `${COMMENT_MESSAGES[getRandomInteger(0, COMMENT_MESSAGES.length - 1)]}`,
-      name: `${USER_NAMES[getRandomInteger(0, USER_NAMES.length - 1)]}`,
-    },
-  };
-}
+const createPhotoDescriptionObject = () => ({
+  id: generateIdPhoto(),
+  url: `photos/${generateIdUrl()}.jpg`,
+  description: `${getRandomArrayItem(descriptions)}`,
+  likes: `${getRandomInteger(MIN_LIKE_NUMBER, MAX_LIKE_NUMBER)}`,
+  comments: createComments(),
+});
+
+/**
+ * Функция возвращает массив, состоящий из объектов
+ * @param number
+ * @returns {*[]}
+ */
+const arrayGenerator = (number) => {
+  const arrayContent = [];
+
+  for (let i = 1 ; i <= number ; i++) {
+    arrayContent.push(createPhotoDescriptionObject());
+  }
+  return arrayContent;
+};
 
 arrayGenerator(PICTURE_COUNT);
