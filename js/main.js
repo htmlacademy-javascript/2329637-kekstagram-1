@@ -119,7 +119,7 @@ const createPhotoDescriptionObject = () => ({
  * @param number
  * @returns {*[]}
  */
-const arrayGenerator = (number) => {
+const createArrayOfObjects = (number) => {
   const arrayContent = [];
 
   for (let i = 1 ; i <= number ; i++) {
@@ -128,4 +128,4 @@ const arrayGenerator = (number) => {
   return arrayContent;
 };
 
-arrayGenerator(PICTURE_COUNT);
+createArrayOfObjects(PICTURE_COUNT);
