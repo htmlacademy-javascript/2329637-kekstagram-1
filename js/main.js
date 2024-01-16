@@ -106,7 +106,7 @@ const createComments = () => {
  *    likes: string
  *  }}
  */
-const createPhotoDescriptionObject = () => ({
+const createObjectPhotoDescription = () => ({
   id: generateIdPhoto(),
   url: `photos/${generateIdUrl()}.jpg`,
   description: `${getRandomArrayItem(descriptions)}`,
@@ -119,13 +119,13 @@ const createPhotoDescriptionObject = () => ({
  * @param number
  * @returns {*[]}
  */
-const createArrayOfObjects = (number) => {
+const createArrayPhotoDescriptions = (number) => {
   const arrayContent = [];
 
   for (let i = 1 ; i <= number ; i++) {
-    arrayContent.push(createPhotoDescriptionObject());
+    arrayContent.push(createObjectPhotoDescription());
   }
   return arrayContent;
 };
 
-createArrayOfObjects(PICTURE_COUNT);
+createArrayPhotoDescriptions(PICTURE_COUNT);
