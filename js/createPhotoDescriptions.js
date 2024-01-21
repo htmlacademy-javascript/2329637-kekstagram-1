@@ -5,7 +5,7 @@ import {createDescriptionOfPhoto} from './createDescriptionOfPhoto.js';
  * @param number
  * @returns {*[]}
  */
-const createPhotoDescriptions = (number) => {
+export const createPhotoDescriptions = (number) => {
   const arrayContent = [];
 
   for (let i = 1 ; i <= number ; i++) {
@@ -13,5 +13,3 @@ const createPhotoDescriptions = (number) => {
   }
   return arrayContent;
 };
-
-export {createPhotoDescriptions};

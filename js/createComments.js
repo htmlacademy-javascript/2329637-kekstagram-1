@@ -1,9 +1,9 @@
-import {AVATAR_COUNT} from './data.js';
-import {generateIdComment} from './data.js';
-import {commentMessages} from './data.js';
-import {userNames} from './data.js';
-import {getRandomInteger} from './util.js';
-import {getRandomArrayItem} from './util.js';
+import {commentMessages, userNames} from './data.js';
+import {createIdGenerator, getRandomInteger, getRandomArrayItem} from './util.js';
+
+const AVATAR_COUNT = 6;
+
+const generateIdComment = createIdGenerator();
 
 /**
  * Функция возвращает массив комментариев из сгенерированных объектов
@@ -16,7 +16,7 @@ import {getRandomArrayItem} from './util.js';
  *    },
  *  ]}
  */
-const createComments = () => {
+export const createComments = () => {
   const arrayComments = [];
 
   for (let i = 1; i <= getRandomInteger(1,5);i++) {
@@ -33,5 +33,3 @@ const createComments = () => {
 
   return arrayComments;
 };
-
-export {createComments};

@@ -5,7 +5,7 @@ import {userNames} from './data.js';
  * @param lastId
  * @returns {function(): number}
  */
-const createIdGenerator = (lastId = 0) => () => ++lastId;
+export const createIdGenerator = (lastId = 0) => () => ++lastId;
 
 /**
  * Функция вычисляет случайное число в заданом диапазоне от 'a' до 'b'
@@ -25,7 +25,4 @@ export const getRandomInteger = (a, b) => {
  * @param array
  * @returns {*}
  */
-const getRandomArrayItem = (array) => array[getRandomInteger(0, userNames.length - 1)];
-
-export {getRandomArrayItem};
-export {createIdGenerator};
+export const getRandomArrayItem = (array) => array[getRandomInteger(0, userNames.length - 1)];

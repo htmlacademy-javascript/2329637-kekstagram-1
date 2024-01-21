@@ -1,11 +1,12 @@
-import {MIN_LIKE_NUMBER} from './data.js';
-import {MAX_LIKE_NUMBER} from './data.js';
 import {descriptions} from './data.js';
-import {generateIdPhoto} from './data.js';
-import {generateIdUrl} from './data.js';
 import {createComments} from './createComments.js';
-import {getRandomInteger} from './util.js';
-import {getRandomArrayItem} from './util.js';
+import {createIdGenerator, getRandomInteger, getRandomArrayItem} from './util.js';
+
+const MAX_LIKE_NUMBER = 200;
+const MIN_LIKE_NUMBER = 15;
+
+const generateIdPhoto = createIdGenerator();
+const generateIdUrl = createIdGenerator();
 
 /**
  * Функция возвращает объект, описывающий фотографию опубликованную пользователем
@@ -23,12 +24,10 @@ import {getRandomArrayItem} from './util.js';
  *    likes: string
  *  }}
  */
-const createDescriptionOfPhoto = () => ({
+export const createDescriptionOfPhoto = () => ({
   id: generateIdPhoto(),
   url: `photos/${generateIdUrl()}.jpg`,
   description: `${getRandomArrayItem(descriptions)}`,
   likes: `${getRandomInteger(MIN_LIKE_NUMBER, MAX_LIKE_NUMBER)}`,
   comments: createComments(),
 });
-
-export {createDescriptionOfPhoto};
