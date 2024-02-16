@@ -4,6 +4,11 @@ const pictureLinkTemplate = document
   .content
   .querySelector('.picture');
 
+/**
+ * Функция генерирует фотографии пользователей на основе массива данных
+ * @param picturesList {array}
+ */
+
 export const renderPosts = (picturesList) => {
   picturesList.forEach(({url, comments, likes}) => {
     const pictureLink = pictureLinkTemplate.cloneNode(true);
@@ -15,5 +20,3 @@ export const renderPosts = (picturesList) => {
     pictures.append(pictureLink);
   });
 };
-
-

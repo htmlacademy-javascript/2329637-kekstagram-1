@@ -1,4 +1,6 @@
 import {userNames} from './data.js';
+export const bigPictureModal = document.querySelector('.big-picture');
+export const modalButtonClose = bigPictureModal.querySelector('.big-picture__cancel');
 
 /**
  * Функция-замыкание для создания независимых идентификаторов
@@ -26,3 +28,11 @@ export const getRandomInteger = (a, b) => {
  * @returns {*}
  */
 export const getRandomArrayItem = (array) => array[getRandomInteger(0, userNames.length - 1)];
+
+/**
+ * Функция закрывает модальное окно которое отображает увеличенное изображение выбранной миниатюры
+ */
+export const modalClose = () => {
+  bigPictureModal.classList.add('hidden');
+  modalButtonClose.removeEventListener('click', modalClose);
+};
