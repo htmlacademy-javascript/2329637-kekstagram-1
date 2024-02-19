@@ -1,5 +1,3 @@
-import {userNames} from './data.js';
-
 /**
  * Функция-замыкание для создания независимых идентификаторов
  * @param lastId
@@ -25,4 +23,11 @@ export const getRandomInteger = (a, b) => {
  * @param array
  * @returns {*}
  */
-export const getRandomArrayItem = (array) => array[getRandomInteger(0, userNames.length - 1)];
+export const getRandomArrayItem = (array) => array[getRandomInteger(0, array.length - 1)];
+
+/**
+ * Функция для проверки нажатия клавиши Escape. Возвращает true, если была нажата клавиша Escape
+ * @param evt
+ * @returns {boolean}
+ */
+export const isEscapeKey = (evt) => evt.key === 'Escape';

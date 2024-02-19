@@ -10,19 +10,7 @@ const generateIdUrl = createIdGenerator();
 
 /**
  * Функция возвращает объект, описывающий фотографию опубликованную пользователем
- * @returns {{
- *    comments:
- *      {
- *        name: string,
- *        id: string,
- *        avatar: string,
- *        message: string
- *      }[],
- *    description: string,
- *    id: number,
- *    url: string,
- *    likes: string
- *  }}
+ * @returns {{comments: {name: string, id: string, avatar: string, message: string}[], description: string, id: number, url: string, likes: string}}
  */
 export const createDescriptionOfPhoto = () => ({
   id: generateIdPhoto(),

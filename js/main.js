@@ -1,5 +1,4 @@
 import {renderPosts} from './rendersPosts.js';
-import {PICTURE_COUNT} from './data.js';
-import {createPhotoDescriptions} from './createPhotoDescriptions.js';
+import {dataArray} from './createPhotoDescriptions.js';
 
-renderPosts(createPhotoDescriptions(PICTURE_COUNT));
+renderPosts(dataArray);
