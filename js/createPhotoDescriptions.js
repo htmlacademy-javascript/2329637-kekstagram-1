@@ -1,4 +1,5 @@
 import {createDescriptionOfPhoto} from './createDescriptionOfPhoto.js';
+import {PICTURE_COUNT} from './data.js';
 
 /**
  * Функция возвращает массив, состоящий из объектов
@@ -13,3 +14,5 @@ export const createPhotoDescriptions = (number) => {
   }
   return arrayContent;
 };
+
+export const dataArray = createPhotoDescriptions(PICTURE_COUNT);

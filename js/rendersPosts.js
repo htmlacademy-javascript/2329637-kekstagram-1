@@ -1,3 +1,5 @@
+import {renderModal} from './renderModal.js';
+
 const pictures = document.querySelector('.pictures');
 const pictureLinkTemplate = document
   .querySelector('#picture')
@@ -8,14 +10,18 @@ const pictureLinkTemplate = document
  * Функция генерирует фотографии пользователей на основе массива данных
  * @param picturesList {array}
  */
-
 export const renderPosts = (picturesList) => {
-  picturesList.forEach(({url, comments, likes}) => {
+  picturesList.forEach(({url, comments, likes, description}) => {
     const pictureLink = pictureLinkTemplate.cloneNode(true);
 
     pictureLink.querySelector('.picture__img').src = url;
     pictureLink.querySelector('.picture__comments').append(comments.length);
     pictureLink.querySelector('.picture__likes').textContent = likes;
+
+    pictureLink.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      renderModal({url, comments, likes, description});
+    });
 
     pictures.append(pictureLink);
   });
