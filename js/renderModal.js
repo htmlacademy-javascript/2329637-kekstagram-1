@@ -54,7 +54,6 @@ export const renderModal = ({url, comments, likes, description}) => {
 
   commentsList.innerHTML = '';
 
-  console.log(comments);
   comments.forEach((item) => {
     renderComment(item);
   });

@@ -10,6 +10,7 @@ const pictureLinkTemplate = document
  * Функция генерирует фотографии пользователей на основе массива данных
  * @param picturesList {array}
  */
+
 export const renderPosts = (picturesList) => {
   picturesList.forEach(({url, comments, likes, description}) => {
     const pictureLink = pictureLinkTemplate.cloneNode(true);
