@@ -9,15 +9,14 @@ const socialCaption = bigPictureModal.querySelector('.social__caption');
 const socialCommentCount = bigPictureModal.querySelector('.social__comment-count');
 const commentsLoader = bigPictureModal.querySelector('.comments-loader');
 const picture = bigPictureModal.querySelector('.big-picture__img').querySelector('img');
-const body = document.querySelector('body');
 
 /**
  * Функция создаёт обработчик событий, который закрывает модальное окно при клике на элемене с классом 'big-picture__cancel'
  */
-const modalClose = () => {
+const onModalClose = () => {
   bigPictureModal.classList.add('hidden');
-  body.classList.remove('modal-open');
-  modalButtonClose.removeEventListener('click', modalClose);
+  document.body.classList.remove('modal-open');
+  modalButtonClose.removeEventListener('click', onModalClose);
 };
 
 /**
@@ -27,7 +26,7 @@ const modalClose = () => {
 const onEscModalClose = (evt) => {
   if (isEscapeKey(evt)) {
     bigPictureModal.classList.add('hidden');
-    body.classList.remove('modal-open');
+    document.body.classList.remove('modal-open');
     document.removeEventListener('keydown', onEscModalClose);
   }
 };
@@ -41,7 +40,7 @@ const onEscModalClose = (evt) => {
  */
 export const renderModal = ({url, comments, likes, description}) => {
   bigPictureModal.classList.remove('hidden');
-  modalButtonClose.addEventListener('click', modalClose);
+  modalButtonClose.addEventListener('click', onModalClose);
   document.addEventListener('keydown', onEscModalClose);
 
   picture.src = url;
@@ -50,7 +49,7 @@ export const renderModal = ({url, comments, likes, description}) => {
 
   socialCommentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
-  body.classList.add('modal-open');
+  document.body.classList.add('modal-open');
 
   commentsList.innerHTML = '';
 
