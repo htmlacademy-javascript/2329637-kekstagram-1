@@ -3,12 +3,17 @@ import {isEscapeKey} from './util.js';
 import {commentsList} from './renderComment.js';
 
 const bigPictureModal = document.querySelector('.big-picture');
-const modalButtonClose = bigPictureModal.querySelector('.big-picture__cancel');
-const likesCount = bigPictureModal.querySelector('.likes-count');
-const socialCaption = bigPictureModal.querySelector('.social__caption');
-const socialCommentCount = bigPictureModal.querySelector('.social__comment-count');
-const commentsLoader = bigPictureModal.querySelector('.comments-loader');
-const picture = bigPictureModal.querySelector('.big-picture__img').querySelector('img');
+const modalButtonClose = document.querySelector('.big-picture__cancel');
+const likesCount = document.querySelector('.likes-count');
+const socialCaption = document.querySelector('.social__caption');
+const commentsCount = document.querySelector('.comments-count');
+const socialCommentsCount = document.querySelector('.social__comment-count');
+const socialComments = document.querySelector('.social__comments');
+const commentsLoaderButton = document.querySelector('.comments-loader');
+const picture = document.querySelector('.big-picture__img').querySelector('img');
+let numberOfComments = 5;
+let allCommentsCount = 0;
+let commentsArray = [];
 
 /**
  * Функция создаёт обработчик событий, который закрывает модальное окно при клике на элемене с классом 'big-picture__cancel'
@@ -17,6 +22,7 @@ const onModalClose = () => {
   bigPictureModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
   modalButtonClose.removeEventListener('click', onModalClose);
+  numberOfComments = 5;
 };
 
 /**
@@ -28,6 +34,7 @@ const onEscModalClose = (evt) => {
     bigPictureModal.classList.add('hidden');
     document.body.classList.remove('modal-open');
     document.removeEventListener('keydown', onEscModalClose);
+    numberOfComments = 5;
   }
 };
 
@@ -39,21 +46,32 @@ const onEscModalClose = (evt) => {
  * @param description {string}
  */
 export const renderModal = ({url, comments, likes, description}) => {
+
+  allCommentsCount = commentsCount.textContent = comments.length.toString();
+  commentsArray = comments.slice();
+
   bigPictureModal.classList.remove('hidden');
   modalButtonClose.addEventListener('click', onModalClose);
   document.addEventListener('keydown', onEscModalClose);
-
   picture.src = url;
   socialCaption.textContent = description;
   likesCount.textContent = likes.toString();
-
-  socialCommentCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
   document.body.classList.add('modal-open');
 
   commentsList.innerHTML = '';
 
-  comments.forEach((item) => {
+  comments.slice(0, numberOfComments).forEach((item) => {
     renderComment(item);
   });
+
+  socialCommentsCount.textContent = `${socialComments.childElementCount} из ${allCommentsCount} комментариев`;
 };
+
+commentsLoaderButton.addEventListener('click', () => {
+  numberOfComments += 5;
+  commentsList.innerHTML = '';
+  commentsArray.slice(0, numberOfComments).forEach((item) => {
+    renderComment(item);
+  });
+  socialCommentsCount.textContent = `${socialComments.childElementCount} из ${allCommentsCount} комментариев`;
+});

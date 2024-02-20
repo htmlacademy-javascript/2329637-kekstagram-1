@@ -19,7 +19,7 @@ const generateIdComment = createIdGenerator();
 export const createComments = () => {
   const arrayComments = [];
 
-  for (let i = 1; i <= getRandomInteger(9,19);i++) {
+  for (let i = 1; i <= getRandomInteger(4,15);i++) {
     arrayComments
       .push(
         {
