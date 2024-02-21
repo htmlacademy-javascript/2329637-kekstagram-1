@@ -3,12 +3,12 @@ import {isEscapeKey} from './util.js';
 import {commentsList} from './renderComment.js';
 
 const bigPictureModal = document.querySelector('.big-picture');
-const modalButtonClose = document.querySelector('.big-picture__cancel');
-const likesCount = document.querySelector('.likes-count');
-const socialCaption = document.querySelector('.social__caption');
-const commentsCount = document.querySelector('.comments-count');
-const socialCommentsCount = document.querySelector('.social__comment-count');
-const socialComments = document.querySelector('.social__comments');
+const modalButtonClose = bigPictureModal.querySelector('.big-picture__cancel');
+const likesCount = bigPictureModal.querySelector('.likes-count');
+const socialCaption = bigPictureModal.querySelector('.social__caption');
+const commentsCount = bigPictureModal.querySelector('.comments-count');
+const socialCommentsCount = bigPictureModal.querySelector('.social__comment-count');
+const socialComments = bigPictureModal.querySelector('.social__comments');
 const commentsLoaderButton = document.querySelector('.comments-loader');
 const picture = document.querySelector('.big-picture__img').querySelector('img');
 let numberOfComments = 5;
@@ -16,13 +16,20 @@ let allCommentsCount = 0;
 let commentsArray = [];
 
 /**
+ * Функция закрывает модальное окно
+ */
+const modalClose = () => {
+  bigPictureModal.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  numberOfComments = 5;
+};
+
+/**
  * Функция создаёт обработчик событий, который закрывает модальное окно при клике на элемене с классом 'big-picture__cancel'
  */
 const onModalClose = () => {
-  bigPictureModal.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+  modalClose();
   modalButtonClose.removeEventListener('click', onModalClose);
-  numberOfComments = 5;
 };
 
 /**
@@ -31,10 +38,26 @@ const onModalClose = () => {
  */
 const onEscModalClose = (evt) => {
   if (isEscapeKey(evt)) {
-    bigPictureModal.classList.add('hidden');
-    document.body.classList.remove('modal-open');
+    modalClose();
     document.removeEventListener('keydown', onEscModalClose);
-    numberOfComments = 5;
+  }
+};
+
+/**
+ * Функция отображает текущие комментарии и их количество
+ */
+const showCurrentComments = () => {
+  commentsList.innerHTML = '';
+  commentsArray.slice(0, numberOfComments).forEach((item) => {
+    renderComment(item);
+  });
+
+  socialCommentsCount.textContent = `${socialComments.childElementCount} из ${allCommentsCount} комментариев`;
+
+  if (socialComments.childElementCount >= allCommentsCount) {
+    commentsLoaderButton.classList.add('hidden');
+  } else {
+    commentsLoaderButton.classList.remove('hidden');
   }
 };
 
@@ -58,20 +81,11 @@ export const renderModal = ({url, comments, likes, description}) => {
   likesCount.textContent = likes.toString();
   document.body.classList.add('modal-open');
 
-  commentsList.innerHTML = '';
-
-  comments.slice(0, numberOfComments).forEach((item) => {
-    renderComment(item);
-  });
-
-  socialCommentsCount.textContent = `${socialComments.childElementCount} из ${allCommentsCount} комментариев`;
+  showCurrentComments();
 };
 
 commentsLoaderButton.addEventListener('click', () => {
   numberOfComments += 5;
-  commentsList.innerHTML = '';
-  commentsArray.slice(0, numberOfComments).forEach((item) => {
-    renderComment(item);
-  });
-  socialCommentsCount.textContent = `${socialComments.childElementCount} из ${allCommentsCount} комментариев`;
+
+  showCurrentComments();
 });
