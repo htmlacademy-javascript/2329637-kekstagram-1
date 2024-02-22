@@ -18,7 +18,7 @@ let commentsArray = [];
 /**
  * Функция закрывает модальное окно
  */
-const modalClose = () => {
+const closeModal = () => {
   bigPictureModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
   numberOfComments = 5;
@@ -28,7 +28,7 @@ const modalClose = () => {
  * Функция создаёт обработчик событий, который закрывает модальное окно при клике на элемене с классом 'big-picture__cancel'
  */
 const onModalClose = () => {
-  modalClose();
+  closeModal();
   modalButtonClose.removeEventListener('click', onModalClose);
 };
 
@@ -38,7 +38,7 @@ const onModalClose = () => {
  */
 const onEscModalClose = (evt) => {
   if (isEscapeKey(evt)) {
-    modalClose();
+    closeModal();
     document.removeEventListener('keydown', onEscModalClose);
   }
 };
