@@ -52,9 +52,6 @@ export const renderEffectSlider = () => {
     imgUploadPreview.classList.add(currentFilterClass);
   };
 
-  /**
-   *
-   */
   effectSlider.noUiSlider.on('update', () => {
     effectValue.value = effectSlider.noUiSlider.get();
     imgUploadPreview.style.filter = `${currentFilterEffect}(${effectValue.value}${currentFilterUnit})`;
