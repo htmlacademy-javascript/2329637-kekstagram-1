@@ -1,5 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {removeScaleControl, resetControlValue, scaleControl} from './scaleControl.js';
+import {validateForm} from './validateForm.js';
+import {resetSlide} from './renderEffectSlider.js';
 
 const imgUpload = document.querySelector('.img-upload');
 const uploadFile = imgUpload.querySelector('#upload-file');
@@ -14,6 +16,7 @@ const closeModal = () => {
   document.body.classList.remove('modal-open');
   uploadFile.value = '';
   removeScaleControl();
+  resetSlide();
 };
 
 /**
@@ -51,5 +54,6 @@ export const renderModalForm = () => {
     document.addEventListener('keydown', onEscModalClose);
     resetControlValue();
     scaleControl();
+    validateForm();
   });
 };
