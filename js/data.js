@@ -28,33 +28,3 @@ export const userNames = [
   'Ратибор',
   'Всеволод',
 ];
-
-export const HASH_TAG_REGULAR = /^#[a-zа-яё0-9]{1,19}$/i;
-
-export const FILTER_EFFECTS = {
-  chrome: {
-    className: 'effects__preview--chrome',
-    effect: 'grayscale', //(0..1), step = 0.1
-    unit: '',
-  },
-  sepia: {
-    className: 'effects__preview--sepia',
-    effect: 'sepia', //(0..1), step = 0.1
-    unit: '',
-  },
-  marvin: {
-    className: 'effects__preview--marvin',
-    effect: 'invert', //(0..100%), step = 1%
-    unit: '%',
-  },
-  phobos: {
-    className: 'effects__preview--phobos',
-    effect: 'blur', //(0..3px), step = 0.1px
-    unit: 'px',
-  },
-  heat: {
-    className: 'effects__preview--heat',
-    effect: 'brightness', //(1..3), step = 0.1
-    unit: '',
-  },
-};

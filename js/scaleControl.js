@@ -1,10 +1,9 @@
-import {imgUploadPreview} from './renderEffectSlider.js';
-
+const imgUploadPreview = document.querySelector('.img-upload__preview');
 const scale = document.querySelector('.scale');
 const controlValue = scale.querySelector('.scale__control--value');
 const controlSmaller = scale.querySelector('.scale__control--smaller');
 const controlBigger = scale.querySelector('.scale__control--bigger');
-const controlStep = Number(controlValue.step);
+const CONTROL_STEP = 25;
 let currentControlValue = parseInt(controlValue.value, 10);
 
 /**
@@ -18,11 +17,10 @@ export const resetControlValue = () => {
  * Функция изменяет масштаб при клике на величину changeValue
  * @param changeValue
  */
-const onControlChange = (changeValue) => {
+const ControlChange = (changeValue) => {
 
   if (currentControlValue + changeValue >= 25 &&
       currentControlValue + changeValue <= 100) {
-
     currentControlValue += changeValue;
     controlValue.value = `${currentControlValue}%`;
     imgUploadPreview.style.transform = `scale(${currentControlValue / 100})`;
@@ -31,25 +29,25 @@ const onControlChange = (changeValue) => {
 /**
  * Функция уменьшает масштаб на величину controlStep
  */
-const controlSmallerHandler = () => onControlChange(-controlStep);
+const onControlSmaller = () => ControlChange(-CONTROL_STEP);
 /**
  * Функция увеличивает масштаб на величину controlStep
  */
-const controlBiggerHandler = () => onControlChange(controlStep);
+const onControlBigger = () => ControlChange(CONTROL_STEP);
 
 /**
  * Функция добавляет обработчики событий на элементы управления масштабом
  */
 export const scaleControl = () => {
-  controlSmaller.addEventListener('click', controlSmallerHandler);
-  controlBigger.addEventListener('click', controlBiggerHandler);
+  controlSmaller.addEventListener('click', onControlSmaller);
+  controlBigger.addEventListener('click', onControlBigger);
 };
 
 /**
  * Функция удаляет обработчики событий элементов управления масштаба
  */
 export const removeScaleControl = () => {
-  controlSmaller.removeEventListener('click', controlSmallerHandler);
-  controlBigger.removeEventListener('click', controlBiggerHandler);
+  controlSmaller.removeEventListener('click', onControlSmaller);
+  controlBigger.removeEventListener('click', onControlBigger);
   imgUploadPreview.style.removeProperty('transform');
 };

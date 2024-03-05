@@ -1,9 +1,11 @@
 import {isEscapeKey} from './util.js';
 import {removeScaleControl, resetControlValue, scaleControl} from './scaleControl.js';
-import {validateForm} from './validateForm.js';
-import {resetSlide} from './renderEffectSlider.js';
+import {resetSlider} from './renderEffectSlider.js';
+import {pristine} from './validateForm.js';
 
+const effectValue = document.querySelector('.effect-level__value');
 const imgUpload = document.querySelector('.img-upload');
+const uploadForm = imgUpload.querySelector('#upload-select-image');
 const uploadFile = imgUpload.querySelector('#upload-file');
 const uploadCloseButton = imgUpload.querySelector('#upload-cancel');
 const overlay = imgUpload.querySelector('.img-upload__overlay');
@@ -16,7 +18,9 @@ const closeModal = () => {
   document.body.classList.remove('modal-open');
   uploadFile.value = '';
   removeScaleControl();
-  resetSlide();
+  resetSlider();
+  uploadForm.reset();
+  pristine.reset();
 };
 
 /**
@@ -52,8 +56,8 @@ export const renderModalForm = () => {
 
     uploadCloseButton.addEventListener('click', onModalClose);
     document.addEventListener('keydown', onEscModalClose);
+    effectValue.value = '';
     resetControlValue();
     scaleControl();
-    validateForm();
   });
 };

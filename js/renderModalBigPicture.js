@@ -1,7 +1,7 @@
 import {renderComment} from './renderComment.js';
 import {isEscapeKey} from './util.js';
-import {commentsList} from './renderComment.js';
 
+const commentsList = document.querySelector('.social__comments');
 const bigPictureModal = document.querySelector('.big-picture');
 const modalButtonClose = bigPictureModal.querySelector('.big-picture__cancel');
 const likesCount = bigPictureModal.querySelector('.likes-count');
