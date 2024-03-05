@@ -17,7 +17,7 @@ export const resetControlValue = () => {
  * Функция изменяет масштаб при клике на величину changeValue
  * @param changeValue
  */
-const ControlChange = (changeValue) => {
+const updateControlValue = (changeValue) => {
 
   if (currentControlValue + changeValue >= 25 &&
       currentControlValue + changeValue <= 100) {
@@ -29,16 +29,16 @@ const ControlChange = (changeValue) => {
 /**
  * Функция уменьшает масштаб на величину controlStep
  */
-const onControlSmaller = () => ControlChange(-CONTROL_STEP);
+const onControlSmaller = () => updateControlValue(-CONTROL_STEP);
 /**
  * Функция увеличивает масштаб на величину controlStep
  */
-const onControlBigger = () => ControlChange(CONTROL_STEP);
+const onControlBigger = () => updateControlValue(CONTROL_STEP);
 
 /**
  * Функция добавляет обработчики событий на элементы управления масштабом
  */
-export const scaleControl = () => {
+export const addsScaleControlListeners = () => {
   controlSmaller.addEventListener('click', onControlSmaller);
   controlBigger.addEventListener('click', onControlBigger);
 };
@@ -46,7 +46,7 @@ export const scaleControl = () => {
 /**
  * Функция удаляет обработчики событий элементов управления масштаба
  */
-export const removeScaleControl = () => {
+export const removeScaleControlListeners = () => {
   controlSmaller.removeEventListener('click', onControlSmaller);
   controlBigger.removeEventListener('click', onControlBigger);
   imgUploadPreview.style.removeProperty('transform');

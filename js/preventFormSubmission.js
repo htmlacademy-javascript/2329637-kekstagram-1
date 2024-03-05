@@ -55,7 +55,7 @@ pristine.addValidator(
 /**
  * Функция добавляет валидацию
  */
-export const validateForm = () => {
+export const preventFormSubmission = () => {
   uploadForm.addEventListener('submit', (evt) => {
     const isValid = pristine.validate();
 
