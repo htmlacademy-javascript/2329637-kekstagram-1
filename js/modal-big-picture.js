@@ -68,7 +68,7 @@ const showCurrentComments = () => {
  * @param likes {number}
  * @param description {string}
  */
-export const showModalBigPicture = ({url, comments, likes, description}) => {
+export const renderModalBigPicture = ({url, comments, likes, description}) => {
 
   allCommentsCount = commentsCount.textContent = comments.length.toString();
   commentsArray = comments.slice();

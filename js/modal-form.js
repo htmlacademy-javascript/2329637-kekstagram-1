@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import {removeScaleControlListeners, resetControlValue, AddScaleControlListeners} from './scale-control.js';
+import {removeScaleControlListeners, resetControlValue, addScaleControlListeners} from './scale-control.js';
 import {initEffectSlider, resetSlider} from './effect-slider.js';
 import {resetForm, validateForm} from './validate.js';
 
@@ -58,7 +58,7 @@ export const initModalForm = () => {
     document.addEventListener('keydown', onEscModalClose);
     effectValue.value = '';
     resetControlValue();
-    AddScaleControlListeners();
+    addScaleControlListeners();
   });
 
   uploadForm.addEventListener('submit', (evt) => {
