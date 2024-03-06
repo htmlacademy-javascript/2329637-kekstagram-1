@@ -98,7 +98,7 @@ export const resetSlider = () => {
 /**
  * Функция добавляет слайдер эффектов
  */
-export const updatesEffectSlider = () => {
+export const initEffectSlider = () => {
 
   noUiSlider.create(effectSlider, {
     range: {

@@ -1,7 +1,7 @@
 import {isEscapeKey} from './util.js';
-import {removeScaleControlListeners, resetControlValue, addsScaleControlListeners} from './addsScaleControlListeners.js';
-import {resetSlider} from './effectsSlider.js';
-import {pristine} from './preventFormSubmission.js';
+import {removeScaleControlListeners, resetControlValue, AddScaleControlListeners} from './scale-control.js';
+import {initEffectSlider, resetSlider} from './effect-slider.js';
+import {resetForm, validateForm} from './validate.js';
 
 const effectValue = document.querySelector('.effect-level__value');
 const imgUpload = document.querySelector('.img-upload');
@@ -20,7 +20,7 @@ const closeModal = () => {
   removeScaleControlListeners();
   resetSlider();
   uploadForm.reset();
-  pristine.reset();
+  resetForm();
 };
 
 /**
@@ -47,9 +47,9 @@ const onEscModalClose = (evt) => {
 };
 
 /**
- * Функция открывает модальное окно загрузки нового изображения
+ * Функция инициализирует модальное окно загрузки нового изображения
  */
-export const displaysModalForm = () => {
+export const initModalForm = () => {
   uploadFile.addEventListener('change', () => {
     overlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
@@ -58,6 +58,16 @@ export const displaysModalForm = () => {
     document.addEventListener('keydown', onEscModalClose);
     effectValue.value = '';
     resetControlValue();
-    addsScaleControlListeners();
+    AddScaleControlListeners();
   });
+
+  uploadForm.addEventListener('submit', (evt) => {
+    const isValid = validateForm();
+
+    if (!isValid) {
+      evt.preventDefault();
+    }
+  });
+
+  initEffectSlider();
 };

@@ -3,7 +3,7 @@ const uploadForm = document.querySelector('.img-upload__form');
 const textDescription = document.querySelector('.text__description');
 const textHashtags = document.querySelector('.text__hashtags');
 
-export const pristine = new Pristine(uploadForm, {
+const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--invalid',
   errorTextParent: 'img-upload__field-wrapper',
@@ -52,15 +52,5 @@ pristine.addValidator(
   'Хэштеги разделяются пробелами и не должны повторяться'
 );
 
-/**
- * Функция добавляет валидацию
- */
-export const preventFormSubmission = () => {
-  uploadForm.addEventListener('submit', (evt) => {
-    const isValid = pristine.validate();
-
-    if (!isValid) {
-      evt.preventDefault();
-    }
-  });
-};
+export const validateForm = () => pristine.validate();
+export const resetForm = () => pristine.reset();

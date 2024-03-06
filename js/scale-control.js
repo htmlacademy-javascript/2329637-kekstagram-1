@@ -38,7 +38,7 @@ const onControlBigger = () => updateControlValue(CONTROL_STEP);
 /**
  * Функция добавляет обработчики событий на элементы управления масштабом
  */
-export const addsScaleControlListeners = () => {
+export const AddScaleControlListeners = () => {
   controlSmaller.addEventListener('click', onControlSmaller);
   controlBigger.addEventListener('click', onControlBigger);
 };

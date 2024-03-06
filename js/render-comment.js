@@ -1,7 +1,7 @@
 const commentTemplate = document.querySelector('#comment')
   .content
   .querySelector('.social__comment');
-export const commentsList = document.querySelector('.social__comments');
+const commentsList = document.querySelector('.social__comments');
 
 /**
  * Функция создаёт комментарий на основе объекта данных

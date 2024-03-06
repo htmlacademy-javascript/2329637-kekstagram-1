@@ -1,4 +1,4 @@
-import {displaysModalBigPicture} from './displaysModalBigPicture.js';
+import {showModalBigPicture} from './modal-big-picture.js';
 
 const pictures = document.querySelector('.pictures');
 const pictureLinkTemplate = document
@@ -21,7 +21,7 @@ export const renderPosts = (picturesList) => {
 
     pictureLink.addEventListener('click', (evt) => {
       evt.preventDefault();
-      displaysModalBigPicture({url, comments, likes, description});
+      showModalBigPicture({url, comments, likes, description});
     });
 
     pictures.append(pictureLink);

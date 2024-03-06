@@ -1,10 +1,6 @@
-import {renderPosts} from './rendersPosts.js';
-import {dataArray} from './createPhotoDescriptions.js';
-import {displaysModalForm} from './displaysModalForm.js';
-import {updatesEffectSlider} from './effectsSlider.js';
-import {preventFormSubmission} from './preventFormSubmission.js';
+import {renderPosts} from './render-posts.js';
+import {dataArray} from './create-photo-descriptions.js';
+import {initModalForm} from './modal-form.js';
 
 renderPosts(dataArray);
-displaysModalForm();
-updatesEffectSlider();
-preventFormSubmission();
+initModalForm();

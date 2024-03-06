@@ -1,4 +1,4 @@
-import {renderComment} from './renderComment.js';
+import {renderComment} from './render-comment.js';
 import {isEscapeKey} from './util.js';
 
 const commentsList = document.querySelector('.social__comments');
@@ -46,7 +46,7 @@ const onEscModalClose = (evt) => {
 /**
  * Функция отображает текущие комментарии и их количество
  */
-const displaysCurrentComments = () => {
+const showCurrentComments = () => {
   commentsList.innerHTML = '';
   commentsArray.slice(0, numberOfComments).forEach((item) => {
     renderComment(item);
@@ -68,7 +68,7 @@ const displaysCurrentComments = () => {
  * @param likes {number}
  * @param description {string}
  */
-export const displaysModalBigPicture = ({url, comments, likes, description}) => {
+export const showModalBigPicture = ({url, comments, likes, description}) => {
 
   allCommentsCount = commentsCount.textContent = comments.length.toString();
   commentsArray = comments.slice();
@@ -81,11 +81,11 @@ export const displaysModalBigPicture = ({url, comments, likes, description}) => 
   likesCount.textContent = likes.toString();
   document.body.classList.add('modal-open');
 
-  displaysCurrentComments();
+  showCurrentComments();
 };
 
 commentsLoaderButton.addEventListener('click', () => {
   numberOfComments += 5;
 
-  displaysCurrentComments();
+  showCurrentComments();
 });
