@@ -1,5 +1,5 @@
 import {descriptions} from './data.js';
-import {createComments} from './createComments.js';
+import {createComments} from './create-comments.js';
 import {createIdGenerator, getRandomInteger, getRandomArrayItem} from './util.js';
 
 const MAX_LIKE_NUMBER = 200;

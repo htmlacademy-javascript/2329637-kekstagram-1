@@ -1,4 +1,4 @@
-import {createDescriptionOfPhoto} from './createDescriptionOfPhoto.js';
+import {createDescriptionOfPhoto} from './create-description-of-photo.js';
 import {PICTURE_COUNT} from './data.js';
 
 /**

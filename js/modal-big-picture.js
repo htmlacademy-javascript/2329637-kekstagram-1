@@ -1,7 +1,7 @@
-import {renderComment} from './renderComment.js';
+import {renderComment} from './render-comment.js';
 import {isEscapeKey} from './util.js';
-import {commentsList} from './renderComment.js';
 
+const commentsList = document.querySelector('.social__comments');
 const bigPictureModal = document.querySelector('.big-picture');
 const modalButtonClose = bigPictureModal.querySelector('.big-picture__cancel');
 const likesCount = bigPictureModal.querySelector('.likes-count');
@@ -25,7 +25,7 @@ const closeModal = () => {
 };
 
 /**
- * Функция создаёт обработчик событий, который закрывает модальное окно при клике на элемене с классом 'big-picture__cancel'
+ * Функция закрывает модальное окно при клике на элемене с классом 'big-picture__cancel'
  */
 const onModalClose = () => {
   closeModal();
@@ -33,7 +33,7 @@ const onModalClose = () => {
 };
 
 /**
- * Функция создаёт обработчик событий, который закрывает модальное окно при нажатии клавиши Escape
+ * Функция закрывает модальное окно при нажатии клавиши Escape
  * @param evt
  */
 const onEscModalClose = (evt) => {
@@ -68,7 +68,7 @@ const showCurrentComments = () => {
  * @param likes {number}
  * @param description {string}
  */
-export const renderModal = ({url, comments, likes, description}) => {
+export const renderModalBigPicture = ({url, comments, likes, description}) => {
 
   allCommentsCount = commentsCount.textContent = comments.length.toString();
   commentsArray = comments.slice();
