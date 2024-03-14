@@ -1198,7 +1198,8 @@ main {
  */
 
 .error,
-.success {
+.success,
+.error-download {
   position: fixed;
   display: flex;
   justify-content: center;
@@ -1211,6 +1212,10 @@ main {
   z-index: 10;
 
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+.error-download {
+  align-items: center;
 }
 
 .error__inner,
@@ -1241,6 +1246,19 @@ main {
   padding-bottom: 75px;
 }
 
+.error-download__inner {
+  padding: 20px;
+  border-radius: 20px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #095360;
+  color: #bb4e4e;
+  width: 50vw;
+}
+
 .error__title {
   position: relative;
 
@@ -1248,6 +1266,10 @@ main {
   margin-bottom: 50px;
 
   font-size: 32px;
+}
+
+.error-download__title {
+  text-align: center;
 }
 
 .success__title {

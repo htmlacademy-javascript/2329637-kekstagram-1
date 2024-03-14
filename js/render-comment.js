@@ -14,7 +14,7 @@ export const renderComment = ({avatar, message, name}) => {
   const comment = commentTemplate.cloneNode(true);
   const commentImg = comment.querySelector('.social__picture');
   const commentText = comment.querySelector('.social__text');
-  commentImg.src = `${avatar }.svg`;
+  commentImg.src = avatar;
   commentImg.alt = name;
   commentText.textContent = message;
 

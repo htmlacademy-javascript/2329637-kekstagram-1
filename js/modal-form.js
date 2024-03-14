@@ -2,6 +2,7 @@ import {isEscapeKey} from './util.js';
 import {removeScaleControlListeners, resetControlValue, addScaleControlListeners} from './scale-control.js';
 import {initEffectSlider, resetSlider} from './effect-slider.js';
 import {resetForm, validateForm} from './validate.js';
+import {sendData} from './send-data.js';
 
 const effectValue = document.querySelector('.effect-level__value');
 const imgUpload = document.querySelector('.img-upload');
@@ -46,6 +47,19 @@ const onEscModalClose = (evt) => {
   }
 };
 
+const setModalFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = validateForm();
+    if (isValid) {
+      const formData = new FormData(evt.target);
+
+      sendData(onSuccess, formData);
+    }
+  });
+};
+
 /**
  * Функция инициализирует модальное окно загрузки нового изображения
  */
@@ -61,13 +75,7 @@ export const initModalForm = () => {
     addScaleControlListeners();
   });
 
-  uploadForm.addEventListener('submit', (evt) => {
-    const isValid = validateForm();
-
-    if (!isValid) {
-      evt.preventDefault();
-    }
-  });
+  setModalFormSubmit(closeModal);
 
   initEffectSlider();
 };
