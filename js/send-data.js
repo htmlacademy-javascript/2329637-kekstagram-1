@@ -17,7 +17,7 @@ const showMessageModal = (template) => {
 
   const closeModal = () => {
     document.body.removeChild(messageModal);
-    removeEventListeners;
+    removeEventListeners();
   };
 
 
