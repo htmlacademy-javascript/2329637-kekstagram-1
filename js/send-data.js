@@ -15,10 +15,9 @@ const showMessageModal = (template) => {
   const messageModal = template.cloneNode(true);
   const buttonClose = messageModal.querySelector('button');
 
-
   const closeModal = () => {
     document.body.removeChild(messageModal);
-    removeEventListeners();
+    removeEventListeners;
   };
 
 
