@@ -12,24 +12,10 @@ const uploadCloseButton = imgUpload.querySelector('#upload-cancel');
 const overlay = imgUpload.querySelector('.img-upload__overlay');
 
 /**
- * Функция закрытия модального окна
- */
-const closeModal = () => {
-  overlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  uploadFile.value = '';
-  removeScaleControlListeners();
-  resetSlider();
-  uploadForm.reset();
-  resetForm();
-};
-
-/**
  * Функция закрывает модальное окно при клике на элемене с идентификатором '#upload-cancel'
  */
-const onModalClose = () => {
+const onClickModalClose = () => {
   closeModal();
-  uploadCloseButton.removeEventListener('click', onModalClose);
 };
 
 /**
@@ -38,14 +24,29 @@ const onModalClose = () => {
  */
 const onEscModalClose = (evt) => {
   if (isEscapeKey(evt)) {
-    if (!evt.target.classList.contains('text__hashtags') && !evt.target.classList.contains('text__description')) {
-      closeModal();
-      document.body.removeEventListener('click', onEscModalClose);
+    const errorModal = document.querySelector('.error');
+    if (!errorModal) {
+      if (!evt.target.classList.contains('text__hashtags') && !evt.target.classList.contains('text__description')) {
+        closeModal();
+      }
     }
-
-    evt.stopPropagation();
   }
 };
+
+/**
+ * Функция закрытия модального окна
+ */
+function closeModal() {
+  overlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  uploadFile.value = '';
+  removeScaleControlListeners();
+  resetSlider();
+  uploadForm.reset();
+  resetForm();
+  uploadCloseButton.removeEventListener('click', onClickModalClose);
+  document.body.removeEventListener('keydown', onEscModalClose);
+}
 
 const setModalFormSubmit = (onSuccess) => {
   uploadForm.addEventListener('submit', (evt) => {
@@ -68,8 +69,8 @@ export const initModalForm = () => {
     overlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
-    uploadCloseButton.addEventListener('click', onModalClose);
-    document.addEventListener('keydown', onEscModalClose);
+    uploadCloseButton.addEventListener('click', onClickModalClose);
+    document.body.addEventListener('keydown', onEscModalClose);
     effectValue.value = '';
     resetControlValue();
     addScaleControlListeners();
@@ -79,3 +80,4 @@ export const initModalForm = () => {
 
   initEffectSlider();
 };
+
