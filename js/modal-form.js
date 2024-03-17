@@ -1,8 +1,9 @@
-import {isEscapeKey} from './util.js';
 import {removeScaleControlListeners, resetControlValue, addScaleControlListeners} from './scale-control.js';
 import {initEffectSlider, resetSlider} from './effect-slider.js';
 import {resetForm, validateForm} from './validate.js';
-import {sendData} from './send-data.js';
+import {sendData} from './api.js';
+import {addHandler, removeHandler} from './event-dispatcher.js';
+import {showMessageModal, templateMessageSuccessModal, templateMessageErrorModal} from './alert-modals.js';
 
 const effectValue = document.querySelector('.effect-level__value');
 const imgUpload = document.querySelector('.img-upload');
@@ -19,21 +20,6 @@ const onClickModalClose = () => {
 };
 
 /**
- * Функция закрывает модальное окно при нажатии клавиши Escape
- * @param evt
- */
-const onEscModalClose = (evt) => {
-  if (isEscapeKey(evt)) {
-    const errorModal = document.querySelector('.error');
-    if (!errorModal) {
-      if (!evt.target.classList.contains('text__hashtags') && !evt.target.classList.contains('text__description')) {
-        closeModal();
-      }
-    }
-  }
-};
-
-/**
  * Функция закрытия модального окна
  */
 function closeModal() {
@@ -45,7 +31,7 @@ function closeModal() {
   uploadForm.reset();
   resetForm();
   uploadCloseButton.removeEventListener('click', onClickModalClose);
-  document.body.removeEventListener('keydown', onEscModalClose);
+  removeHandler(closeModal);
 }
 
 const setModalFormSubmit = (onSuccess) => {
@@ -56,7 +42,14 @@ const setModalFormSubmit = (onSuccess) => {
     if (isValid) {
       const formData = new FormData(evt.target);
 
-      sendData(onSuccess, formData);
+      sendData(formData)
+        .then(() => {
+          onSuccess();
+          showMessageModal(templateMessageSuccessModal);
+        })
+        .catch(() => {
+          showMessageModal(templateMessageErrorModal);
+        });
     }
   });
 };
@@ -70,12 +63,11 @@ export const initModalForm = () => {
     document.body.classList.add('modal-open');
 
     uploadCloseButton.addEventListener('click', onClickModalClose);
-    document.body.addEventListener('keydown', onEscModalClose);
     effectValue.value = '';
     resetControlValue();
     addScaleControlListeners();
+    addHandler(closeModal);
   });
-
   setModalFormSubmit(closeModal);
 
   initEffectSlider();
