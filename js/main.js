@@ -1,6 +1,12 @@
-import {renderPosts} from './render-posts.js';
-import {dataArray} from './create-photo-descriptions.js';
 import {initModalForm} from './modal-form.js';
+import {getData} from './api.js';
+import {renderPosts} from './render-posts.js';
+import {showErrorDownload} from './alert-modals.js';
 
-renderPosts(dataArray);
+getData()
+  .then((data) => renderPosts(data))
+  .catch((error) => {
+    showErrorDownload(error.message);
+  });
+
 initModalForm();

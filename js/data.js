@@ -1,4 +1,3 @@
-export const PICTURE_COUNT = 25;
 export const commentMessages = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',

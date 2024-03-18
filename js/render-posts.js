@@ -7,8 +7,8 @@ const pictureLinkTemplate = document
   .querySelector('.picture');
 
 /**
- * Функция генерирует фотографии пользователей на основе массива данных
- * @param picturesList {array}
+ * Функция генерирует фотографии пользователей на основе объекта данных, полученных с сервера
+ * @param picturesList {object}
  */
 
 export const renderPosts = (picturesList) => {

@@ -1,7 +1,9 @@
-import {isEscapeKey} from './util.js';
 import {removeScaleControlListeners, resetControlValue, addScaleControlListeners} from './scale-control.js';
 import {initEffectSlider, resetSlider} from './effect-slider.js';
 import {resetForm, validateForm} from './validate.js';
+import {sendData} from './api.js';
+import {addHandler, removeHandler} from './event-dispatcher.js';
+import {showMessageModal, templateMessageSuccessModal, templateMessageErrorModal} from './alert-modals.js';
 
 const effectValue = document.querySelector('.effect-level__value');
 const imgUpload = document.querySelector('.img-upload');
@@ -11,9 +13,16 @@ const uploadCloseButton = imgUpload.querySelector('#upload-cancel');
 const overlay = imgUpload.querySelector('.img-upload__overlay');
 
 /**
+ * Функция закрывает модальное окно при клике на элемене с идентификатором '#upload-cancel'
+ */
+const onClickModalClose = () => {
+  closeModal();
+};
+
+/**
  * Функция закрытия модального окна
  */
-const closeModal = () => {
+function closeModal() {
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   uploadFile.value = '';
@@ -21,29 +30,28 @@ const closeModal = () => {
   resetSlider();
   uploadForm.reset();
   resetForm();
-};
+  uploadCloseButton.removeEventListener('click', onClickModalClose);
+  removeHandler(closeModal);
+}
 
-/**
- * Функция закрывает модальное окно при клике на элемене с идентификатором '#upload-cancel'
- */
-const onModalClose = () => {
-  closeModal();
-  uploadCloseButton.removeEventListener('click', onModalClose);
-};
+const setModalFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-/**
- * Функция закрывает модальное окно при нажатии клавиши Escape
- * @param evt
- */
-const onEscModalClose = (evt) => {
-  if (isEscapeKey(evt)) {
-    if (!evt.target.classList.contains('text__hashtags') && !evt.target.classList.contains('text__description')) {
-      closeModal();
-      document.body.removeEventListener('click', onEscModalClose);
+    const isValid = validateForm();
+    if (isValid) {
+      const formData = new FormData(evt.target);
+
+      sendData(formData)
+        .then(() => {
+          onSuccess();
+          showMessageModal(templateMessageSuccessModal);
+        })
+        .catch(() => {
+          showMessageModal(templateMessageErrorModal);
+        });
     }
-
-    evt.stopPropagation();
-  }
+  });
 };
 
 /**
@@ -54,20 +62,14 @@ export const initModalForm = () => {
     overlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
-    uploadCloseButton.addEventListener('click', onModalClose);
-    document.addEventListener('keydown', onEscModalClose);
+    uploadCloseButton.addEventListener('click', onClickModalClose);
     effectValue.value = '';
     resetControlValue();
     addScaleControlListeners();
+    addHandler(closeModal);
   });
-
-  uploadForm.addEventListener('submit', (evt) => {
-    const isValid = validateForm();
-
-    if (!isValid) {
-      evt.preventDefault();
-    }
-  });
+  setModalFormSubmit(closeModal);
 
   initEffectSlider();
 };
+
