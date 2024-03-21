@@ -12,10 +12,18 @@ document.addEventListener('keydown', (evt) => {
   }
 });
 
+/**
+ * Функция принимает коллбэк и добавляет его в диспетчер событий
+ * @param cb
+ */
 export const addHandler = (cb) => {
   eventStack.push(cb);
 };
 
+/**
+ * Функция принимает коллбэк и удаляет его из диспетчера событий
+ * @param cb
+ */
 export const removeHandler = (cb) => {
   eventStack = eventStack.filter((item) => cb !== item);
 };

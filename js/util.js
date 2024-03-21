@@ -31,3 +31,22 @@ export const getRandomArrayItem = (array) => array[getRandomInteger(0, array.len
  * @returns {boolean}
  */
 export const isEscapeKey = (evt) => evt.key === 'Escape';
+
+/**
+ * Функция принимает коллбэк и ограничивает его частоту вызова
+ * @param callback
+ * @param delayBetweenFrames
+ * @returns {(function(...[*]): void)|*}
+ */
+export const throttle = (callback, delayBetweenFrames) => {
+  let lastTime = 0;
+
+  return (...rest) => {
+    const now = new Date();
+
+    if (now - lastTime >= delayBetweenFrames) {
+      callback.apply(this, rest);
+      lastTime = now;
+    }
+  };
+};
