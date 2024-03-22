@@ -1,4 +1,4 @@
-import {addHandler, removeHandler} from './event-dispatcher.js';
+import {addHandler, removeHandler} from './event-handler.js';
 
 const errorDownload = document.querySelector('.error-download');
 const errorDownloadTitle = errorDownload.querySelector('.error-download__title');

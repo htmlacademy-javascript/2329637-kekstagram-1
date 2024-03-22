@@ -1,38 +1,13 @@
 import {renderPosts} from './render-posts.js';
-import {getData} from './api.js';
-import {showErrorDownload} from './alert-modals.js';
-import {throttle} from './util.js';
+import {debounce} from './util.js';
 
 const pictures = document.querySelector('.pictures');
 const imgFilters = document.querySelector('.img-filters');
+const filterForm = imgFilters.querySelector('.img-filters__form');
 const buttonFilterDefault = imgFilters.querySelector('#filter-default');
 const buttonFilterRandom = imgFilters.querySelector('#filter-random');
 const buttonFilterDiscussed = imgFilters.querySelector('#filter-discussed');
 let currentFilter = buttonFilterDefault;
-
-/**
- * Функция добавляет класс визуального отображения текущего фильтра
- * @param button
- */
-const changeCurrentFilter = (button) => {
-  currentFilter.classList.remove('img-filters__button--active');
-  currentFilter = button;
-  currentFilter.classList.add('img-filters__button--active');
-};
-
-/**
- * Функция делает блок с фильтрами видимым
- */
-export const showFilter = () => {
-  imgFilters.classList.remove('img-filters--inactive');
-};
-
-/**
- * Функция делает блок с фильтрами невидимым
- */
-export const hideFilter = () => {
-  imgFilters.classList.add('img-filters--inactive');
-};
 
 /**
  * Функция очищает текущий список постов
@@ -43,61 +18,45 @@ const removePictures = () => {
 };
 
 /**
- * Функция отображения постов по-умолчанию
- * @param button
+ * Функция добавляет класс визуального отображения текущего фильтра
+ * @param evt
  */
-const onClickRenderDefault = (button) => {
-  removePictures();
-  changeCurrentFilter(button);
-  getData()
-    .then((data) => {
-      renderPosts(data);
-      showFilter();
-    })
-    .catch((error) => {
-      showErrorDownload(error.message);
-      hideFilter();
-    });
-};
-/**
- * Функция отображения 10 случайных постов
- * @param button
- */
-const onClickRenderRandom = (button) => {
-  let dataArray;
-  removePictures();
-  changeCurrentFilter(button);
-  getData()
-    .then((data) => {
-      dataArray = data.sort(() => Math.random() - 0.5).slice(0,10);
-    })
-    .then(() => renderPosts(dataArray))
-    .then(() => showFilter())
-    .catch((error) => {
-      showErrorDownload(error.message);
-      hideFilter();
-    });
-};
-/**
- * Функция отображения постов, отсортированных в порядке убывания количества комментариев
- * @param button
- */
-const onClickRenderDiscussed = (button) => {
-  let dataArray;
-  removePictures();
-  changeCurrentFilter(button);
-  getData()
-    .then((data) => {
-      dataArray = data.sort((a,b) => b.comments.length - a.comments.length);
-    })
-    .then(() => renderPosts(dataArray))
-    .then(() => showFilter())
-    .catch((error) => {
-      showErrorDownload(error.message);
-      hideFilter();
-    });
+const changeCurrentFilterClass = (evt) => {
+  currentFilter.classList.remove('img-filters__button--active');
+  currentFilter = evt.target;
+  currentFilter.classList.add('img-filters__button--active');
 };
 
-buttonFilterDefault.addEventListener('click', throttle((evt) => onClickRenderDefault(evt.target), 300));
-buttonFilterRandom.addEventListener('click', throttle((evt) => onClickRenderRandom(evt.target), 300));
-buttonFilterDiscussed.addEventListener('click', throttle((evt) => onClickRenderDiscussed(evt.target), 300));
+const applyFilter = (dataArray) => {
+  removePictures();
+  renderPosts(dataArray);
+};
+
+export const initFilter = (data) => {
+  imgFilters.classList.remove('img-filters--inactive');
+
+  const sortPosts = (evt) => {
+    let dataArray = data.slice();
+    if (evt.target === buttonFilterRandom) {
+      dataArray = dataArray
+        .sort(() => Math.random() - 0.5)
+        .slice(0,10);
+    } else if (evt.target === buttonFilterDiscussed) {
+      dataArray = dataArray
+        .sort((a,b) => b.comments.length - a.comments.length);
+    }
+    applyFilter(dataArray);
+  };
+
+  const debouncedSortFilteredPosts = debounce(sortPosts, 500);
+
+  const onClickApplyFilter = (evt) => {
+    if (evt.target !== currentFilter) {
+      changeCurrentFilterClass(evt);
+      debouncedSortFilteredPosts(evt);
+    }
+  };
+
+  filterForm.addEventListener('click', onClickApplyFilter);
+};
+

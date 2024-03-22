@@ -2,7 +2,7 @@ import {removeScaleControlListeners, resetControlValue, addScaleControlListeners
 import {initEffectSlider, resetSlider} from './effect-slider.js';
 import {resetForm, validateForm} from './validate.js';
 import {sendData} from './api.js';
-import {addHandler, removeHandler} from './event-dispatcher.js';
+import {addHandler, removeHandler} from './event-handler.js';
 import {showMessageModal, templateMessageSuccessModal, templateMessageErrorModal} from './alert-modals.js';
 
 const effectValue = document.querySelector('.effect-level__value');
