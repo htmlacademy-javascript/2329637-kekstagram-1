@@ -13,7 +13,10 @@ const Method = {
 const ErrorText = {
   GET_DATA: 'При загрузке данных с сервер произошла ошибка, пожалуйста, обновите страницу',
 };
-
+/**
+ * Функция получает данные с сервера
+ * @returns {Promise<any>}
+ */
 export const getData = () => fetch(
   `${BASE_URL}${Route.GET_DATA}`
 )
