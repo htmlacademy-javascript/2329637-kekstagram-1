@@ -1,4 +1,4 @@
-import {addHandler, removeHandler} from './event-handler.js';
+import {addEscHandler, removeEscHandler} from './escape-press-handler.js';
 
 const errorDownload = document.querySelector('.error-download');
 const errorDownloadTitle = errorDownload.querySelector('.error-download__title');
@@ -14,7 +14,7 @@ export const showErrorDownload = (message) => {
   const closeModal = () => {
     errorDownload.classList.add('hidden');
     errorDownload.removeEventListener('click', closeErrorDownload);
-    removeHandler(closeModal);
+    removeEscHandler(closeModal);
   };
 
   /**
@@ -27,7 +27,7 @@ export const showErrorDownload = (message) => {
     }
   }
 
-  addHandler(closeModal);
+  addEscHandler(closeModal);
   errorDownload.classList.remove('hidden');
   errorDownloadTitle.textContent = message;
   errorDownload.addEventListener('click', closeErrorDownload);
@@ -64,13 +64,13 @@ export const showMessageModal = (template) => {
    * Функция закрытия модального окна ошибки/успеха отправки данных на сервер
    */
   function closeModal () {
-    removeHandler(closeModal);
+    removeEscHandler(closeModal);
     messageModal.removeEventListener('click', onClickModalClose);
     messageModal.remove();
   }
 
   messageModal.addEventListener('click', onClickModalClose);
-  addHandler(closeModal);
+  addEscHandler(closeModal);
 
   document.body.appendChild(messageModal);
 };

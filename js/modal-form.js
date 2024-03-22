@@ -2,7 +2,7 @@ import {removeScaleControlListeners, resetControlValue, addScaleControlListeners
 import {initEffectSlider, resetSlider} from './effect-slider.js';
 import {resetForm, validateForm} from './validate.js';
 import {sendData} from './api.js';
-import {addHandler, removeHandler} from './event-handler.js';
+import {addEscHandler, removeEscHandler} from './escape-press-handler.js';
 import {showMessageModal, templateMessageSuccessModal, templateMessageErrorModal} from './alert-modals.js';
 
 const effectValue = document.querySelector('.effect-level__value');
@@ -31,7 +31,7 @@ function closeModal() {
   uploadForm.reset();
   resetForm();
   uploadCloseButton.removeEventListener('click', onClickModalClose);
-  removeHandler(closeModal);
+  removeEscHandler(closeModal);
 }
 
 const setModalFormSubmit = (onSuccess) => {
@@ -66,7 +66,7 @@ export const initModalForm = () => {
     effectValue.value = '';
     resetControlValue();
     addScaleControlListeners();
-    addHandler(closeModal);
+    addEscHandler(closeModal);
   });
   setModalFormSubmit(closeModal);
 
