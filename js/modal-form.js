@@ -4,6 +4,7 @@ import {resetForm, validateForm} from './validate.js';
 import {sendData} from './api.js';
 import {addEscHandler, removeEscHandler} from './escape-press-handler.js';
 import {showMessageModal, templateMessageSuccessModal, templateMessageErrorModal} from './alert-modals.js';
+import {showDownloadImage} from './preview-image.js';
 
 const effectValue = document.querySelector('.effect-level__value');
 const imgUpload = document.querySelector('.img-upload');
@@ -67,9 +68,9 @@ export const initModalForm = () => {
     resetControlValue();
     addScaleControlListeners();
     addEscHandler(closeModal);
+    showDownloadImage();
   });
-  setModalFormSubmit(closeModal);
 
+  setModalFormSubmit(closeModal);
   initEffectSlider();
 };
-
